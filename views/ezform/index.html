@@ -31,7 +31,10 @@
 </div>
 <script>
      //ezform-view
+     
      let ezform = require("./controllers/ezform.js");
+
+     ezform.load("1500628215069381400", "ezform-view");
      $("#btn-ezform-creatn").click(()=>{
         if($("#ezf_id").val() == ""){
             $("#error-message").html(ezform.error("กรุณากรอกรหัส ezform"));

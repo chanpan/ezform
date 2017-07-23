@@ -1,7 +1,9 @@
-var fs = require('fs');
+ 
+var fs = require("./fs.js");
 var ezf = module.exports = {
    
     load:(ezf_id="", selector)=>{
+        $(`#${selector}`).html('');
         let url = "http://dpmcloud.dev/api/v1/desktop/get-ezform";
         $.ajax({
             url:url,
@@ -12,14 +14,27 @@ var ezf = module.exports = {
             },
             dataType:"JSON",
             success:function(data){
+                 fs.writer(data.ezform.ezf_id,JSON.stringify(data));
+                 ezf.genform(selector,data.ezform.ezf_name,data.ezform.ezf_id,data);
                // console.log(data.ezfields);  //ezfields  ,  ezchoices ,  ezform
-                $("#ezf-title").html(data.ezform.ezf_name+"<hr>");
-                    $(".frm-ezforms").attr("id", data.ezform.ezf_id);
-                    $.each(data.ezfields,(k,v)=>{ 
-                        $(`#${selector}`).append(ezf.ezf_field(v));
-                    });
+                
               // $("#ezform-button").html(ezf.ezf_button());
-            }
+            },error: function (data) {
+                $.ajax({
+                    url:`./assets/db/${ezf_id}.json`,
+                    dataType:"JSON",
+                    success:function(data){
+                        ezf.genform(selector,data.ezform.ezf_name,data.ezform.ezf_id,data);
+                    }
+                })
+            },
+        });
+    },
+    genform:(selector="", title="",ezf_id="", data)=>{
+        $("#ezf-title").html(title+"<hr>");
+        $(".frm-ezforms").attr("id", ezf_id);
+        $.each(data.ezfields, (k, v) => {
+            $(`#${selector}`).append(ezf.ezf_field(v));
         });
     },
     error:(message)=>{
@@ -75,7 +90,7 @@ var ezf = module.exports = {
          var dddd = JSON.parse(JSON.stringify('{'+values+'}'));
          var val = JSON.parse(dddd);
         
-         console.log(val);
+         
         if(sq.careateTable(sql) || !sq.careateTable(sql)){
            
             if(sq.create(table,val)){

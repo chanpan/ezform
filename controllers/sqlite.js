@@ -22,5 +22,8 @@ var sq = module.exports = {
     },
     test:(table)=>{
         console.log(sq.connected().run(`SELECT * FROM ${table}`));
+    },
+    reader:(table)=>{
+         return sq.connected().run(`SELECT * FROM ${table}`);
     }
 }
