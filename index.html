@@ -8,6 +8,7 @@
     
     <link rel="stylesheet" href="./assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="./assets/css/style.css">
+    <link rel="stylesheet" href="./assets/font-awesome-4.7.0/css/font-awesome.min.css">
 
     <script>window.$ = window.jQuery = require('./assets/js/jquery.js');</script>
     <script src="./assets/bootstrap/js/bootstrap.min.js"></script>
@@ -16,6 +17,16 @@
 <body>
     <div id="navbar"></diiv>
     <div id="root" class="container"></diiv>
+
+        
 </body>
-    <script> require("./controllers/main.js")</script>
+<script>
+   
+    var c = require("./controllers/main.js");
+        c.content("./views/ezform/index.html", "root");
+
+    //var m = require("./controllers/menu.js");
+      //  m.menu("./views/layouts/navbar.html", "navbar");
+</script>
+    
 </html>
