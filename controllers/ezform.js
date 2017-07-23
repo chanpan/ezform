@@ -4,7 +4,7 @@ var ezf = module.exports = {
    
     load:(ezf_id="", selector)=>{
         $(`#${selector}`).html('');
-        let url = "http://dpmcloud.dev/api/v1/desktop/get-ezform";
+        let url = "https://www.thaicarecloud.org/api/v1/desktop/get-ezform";
         $.ajax({
             url:url,
             type:"GET",
@@ -16,6 +16,7 @@ var ezf = module.exports = {
             success:function(data){
                  fs.writer(data.ezform.ezf_id,JSON.stringify(data));
                  ezf.genform(selector,data.ezform.ezf_name,data.ezform.ezf_id,data);
+                console.log(data);
                // console.log(data.ezfields);  //ezfields  ,  ezchoices ,  ezform
                 
               // $("#ezform-button").html(ezf.ezf_button());
@@ -35,6 +36,12 @@ var ezf = module.exports = {
         $(".frm-ezforms").attr("id", ezf_id);
         $.each(data.ezfields, (k, v) => {
             $(`#${selector}`).append(ezf.ezf_field(v));
+            //  $('.datepicker').datepicker({
+            //     format: 'yyyy/mm/dd',
+            //         todayBtn: true,
+            //         language: 'th',             //เปลี่ยน label ต่างของ ปฏิทิน ให้เป็น ภาษาไทย   (ต้องใช้ไฟล์ bootstrap-datepicker.th.min.js นี้ด้วย)
+            //         thaiyear: true              //Set เป็นปี พ.ศ.
+            //     }).datepicker("setDate", "0");  //กำหนดเป็นวันปัจุบัน
         });
     },
     error:(message)=>{
@@ -51,6 +58,28 @@ var ezf = module.exports = {
             </div>
             `;
          }
+         else if(ezf_field.ezf_field_type == 7){
+            return `
+            <div id="${ezf_field.ezf_field_id}">
+                <label>${ezf_field.ezf_field_label}</label>
+                <div class="input-group date" data-provide="datepicker">
+                    <input type="text" class="form-control datepicker" id='${ezf_field.ezf_field_name}' name='${ezf_field.ezf_field_name}'>
+                    <div class="input-group-addon">
+                        <span class="glyphicon glyphicon-th"></span>
+                    </div>
+                </div>
+                
+            </div>
+            `;
+         }
+        else if(ezf_field.ezf_field_type == 19){
+             return `
+            <div id="${ezf_field.ezf_field_id}">
+                <label>${ezf_field.ezf_field_label}</label>
+                <input type='checkbox' id='${ezf_field.ezf_field_name}' name='${ezf_field.ezf_field_name}' class='form-control'>
+            </div>
+            `;
+        }   
     },
     fields:(frm)=>{
         let f = $(`#${frm}`).serializeArray();

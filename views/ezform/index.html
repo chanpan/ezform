@@ -39,13 +39,13 @@
      
      let ezform = require("./controllers/ezform.js");
 
-     ezform.load("1500628215069381400", "ezform-view");
+     ezform.load($("#ezf_id").val(), "ezform-view");
      $("#btn-ezform-creatn").click(()=>{
         if($("#ezf_id").val() == ""){
             $("#error-message").html(ezform.error("กรุณากรอกรหัส ezform"));
             return false; 
         }
-        ezform.load("1500628215069381400", "ezform-view");
+        ezform.load($("#ezf_id").val(), "ezform-view");
      });//1500628215069381400
     $("#save-submit").click(()=>{
        ezform.save('.frm-ezforms');
