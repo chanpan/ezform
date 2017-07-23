@@ -1,0 +1,46 @@
+<div id="top">
+<div id="error-message"></div>
+<div class="row">
+  <div class="col-lg-12">
+    <div class="input-group">
+      <input type="text" class="form-control" id="ezf_id" placeholder="กรุณากรอกรหัส ezform" value="1500628215069381400">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button" id="btn-ezform-creatn">สร้าง</button>
+      </span>
+    </div> 
+  </div><!-- /.col-lg-6 -->
+</div><!-- /.row -->
+<form class="frm-ezforms">
+<h2 id="ezf-title"></h2>
+<div id="ezform-view"></div>
+<div id="ezform-button">
+  <div class="col-lg-12 text-right">
+    <div id="div-savedraft"></div>
+    <hr> &nbsp;&nbsp;
+    <button type="button" id="save-draft" class="btn btn-info btn-lg" data-toggle="tooltip" data-original-title="บันทึกข้อมูลเพื่อแก้ไขในภายหลัง"
+      style="margin: 10px 0px 10px 0px;"><span class="fa fa-pencil-square-o"></span> Save draft</button>&nbsp;&nbsp;
+    <button type="button" id="save-submit" class="btn btn-primary btn-lg" data-toggle="tooltip" data-original-title="ส่งข้อมูลนี้เข้าระบบฐานข้อมูล"
+      style="margin: 10px 0px 10px 0px;"><span class="fa fa-send"></span> Submit</button>&nbsp;&nbsp;<a type="button" class="btn btn-warning btn-lg"
+      href="/inputdata/insert-record?ezf_id=1500457974045564000&amp;target=MTQ3MTM1NTc2NTEzNTAxMjEwMA%3D%3D&amp;comp_id_target=1461911117076186800&amp;dataid=1500824377073349100"
+      data-toggle="tooltip" data-original-title="ล้างข้อมูลในฟอร์มนี้" data-confirm="<div class = &quot;alert alert-danger h4&quot;>คุณต้องการล้าง(รีเช็ต) Record นี้?</div>"><span class="fa fa-times"></span> Clear</a>&nbsp;&nbsp;
+    <a class="btn btn-danger btn-lg" href="/inputdata/step4?ezf_id=1500457974045564000&amp;target=MTQ3MTM1NTc2NTEzNTAxMjEwMA%3D%3D&amp;del_dataid=1500824377073349100"
+      data-toggle="tooltip" data-original-title="ลบ Record นี้ทิ้งไป" data-confirm="<div class = &quot;alert alert-danger h4&quot;>คุณต้องการลบ Record นี้?</div>"><span class="fa fa-trash-o"></span> Delete</a>
+  </div>
+</div>
+</form>
+</div>
+<script>
+     //ezform-view
+     let ezform = require("./controllers/ezform.js");
+     $("#btn-ezform-creatn").click(()=>{
+        if($("#ezf_id").val() == ""){
+            $("#error-message").html(ezform.error("กรุณากรอกรหัส ezform"));
+            return false; 
+        }
+        ezform.load("1500628215069381400", "ezform-view");
+     });//1500628215069381400
+    $("#save-submit").click(()=>{
+       ezform.save('.frm-ezforms');
+    });
+    
+</script>
